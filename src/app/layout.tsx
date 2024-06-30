@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import Box from '@mui/material/Box';
+import { Toolbar } from "@mui/material";
+import SideBar from "@/component/layout/SideBar";
+import TopBar from "@/component/layout/TopBar";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body >
+        <Box sx={{ display: 'flex' }}>
+          <TopBar></TopBar>
+          <SideBar></SideBar>
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <Toolbar />
+            {children}
+          </Box>
+        </Box>
+      </body>
     </html>
   );
 }
