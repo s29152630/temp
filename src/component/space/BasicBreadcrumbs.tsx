@@ -4,14 +4,19 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from 'next/link';
 
 export default function BasicBreadcrumbs(props: { spaceUuid: string, folderNames: string[] }) {
+    const folderNames = props.folderNames ? props.folderNames : [];
+    const navs = folderNames.reduce((acc, curr) => {
+        if (acc.length === 0) {
+          acc.push(curr);
+        } else {
+          acc.push(acc[acc.length - 1] + curr);
+        }
+        return acc;
+      }, ["/" + props.spaceUuid]);
 
-    const folderNames = props.folderNames ? props.folderNames : ["/"];
-    console.log("line 9: " + folderNames);
-    const links = ["1", "2", "3"].reduce((accu, cur) => [...accu, accu + cur], [""]);
-    console.log(links);
+    // const links = navs.map(e => <Link href={e}></Link>)
     return (
         <>
-            {links}
             <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" href="/">
                     MUI

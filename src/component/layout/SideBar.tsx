@@ -24,10 +24,6 @@ export default function SideBar() {
         "id": 3,
         "name": "Help",
         "href": "/help",
-    }, {
-        "id": 4,
-        "name": "data",
-        "href": "/data",
     }];
 
     return (

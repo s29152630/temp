@@ -1,24 +1,87 @@
-import BasicBreadcrumbs from "@/component/space/BasicBreadcrumbs";
-import CreateFolderDialog from "@/component/space/CreateFolderDialog";
-import UploadFileDialog from "@/component/space/UploadFileDialog";
-import MSpaceItem from "@/lib/model/mongo/MSpaceItem";
-import connectDB from "@/lib/mongo/mongoos";
+"use client";
+
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { useEffect } from 'react';
+import MSpaceItem from '@/lib/model/mongo/MSpaceItem';
+import BasicBreadcrumbs from '@/component/space/BasicBreadcrumbs';
+import CreateFolderDialog from '@/component/space/CreateFolderDialog';
+import UploadFileDialog from '@/component/space/UploadFileDialog';
+import { resolve } from 'path';
 
 
-export default async function SpaceItem({ params }: { params: { spaceUuid: string, folderNames: string[] } }) {
+const columns: GridColDef<(typeof MSpaceItem)>[] = [
+  {
+    field: 'space_item_uuid',
+    headerName: 'ID',
+    width: 350,
+    editable: false,
+  },
+  {
+    field: 'space_item_name',
+    headerName: 'Name',
+    width: 150,
+    editable: false,
+  },
+  {
+    field: 'type',
+    headerName: 'Type',
+    width: 150,
+    editable: false,
+  },
+  // {
+  //   field: 'create_user',
+  //   headerName: 'Create User',
+  //   width: 100,
+  //   editable: false,
+  // },
+  // {
+  //   field: 'create_time',
+  //   headerName: 'Create Time',
+  //   width: 250,
+  //   editable: false,
+  //   sortable: true,
+  // },
+];
 
-    await connectDB();
+
+export default function SpaceItem({ params }: { params: { spaceUuid: string, folderNames: string[] } }) {
+
+  // throw Promise.resolve("test");
+
+  const [rows, setRows] = React.useState<typeof MSpaceItem[]>([]);
+
+  useEffect(() => {
     const parent = params.folderNames ? params.folderNames.reduce((accu, cur) => accu + "/" + cur, "") : "/";
-    console.log("line 12: " + parent);
-    const spaceItems = await MSpaceItem.find({ space_uuid: { $eq: params.spaceUuid }, parent: { $eq: parent } });
+    fetch(`http://localhost:3000/api/space/${params.spaceUuid}/${parent}`)
+      .then(e => e.json())
+      .then(e => setRows(e));    
+  }, [params]);
 
-    
-    return (
-        <>
-            <BasicBreadcrumbs spaceUuid={params.spaceUuid} folderNames={params.folderNames}></BasicBreadcrumbs>
-            <CreateFolderDialog params={params}></CreateFolderDialog>
-            <UploadFileDialog params={params}></UploadFileDialog>
-        </>
-    );
+  return (
+    <>
+      <BasicBreadcrumbs spaceUuid={params.spaceUuid} folderNames={params.folderNames}></BasicBreadcrumbs>
+      <CreateFolderDialog params={params}></CreateFolderDialog>
+      <UploadFileDialog params={params}></UploadFileDialog>
 
+      <Box sx={{ height: 400, width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          getRowId={(row) => row.space_item_uuid}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
+            },
+          }}
+          pageSizeOptions={[5]}
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
+      </Box>
+    </>
+  );
 }
