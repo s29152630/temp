@@ -33,7 +33,7 @@ export default async function SpaceNav() {
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
                         {spaces.map(e => (
-                            <Link key={e.space_uuid} href={`/space/${e.space_uuid}`}>
+                            <Link key={e.space_uuid} href={`/spaceItem/${e.space_uuid}`}>
                                 <ListItem key={e.id} disablePadding>
                                     <ListItemButton>
                                         <ListItemText primary={e.space_name} />

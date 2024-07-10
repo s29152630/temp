@@ -54,18 +54,20 @@ export default function SpaceItem({ params }: { params: { spaceUuid: string, fol
 
   useEffect(() => {
     const parent = params.folderNames ? params.folderNames.reduce((accu, cur) => accu + "/" + cur, "") : "/";
-    fetch(`http://localhost:3000/api/space/${params.spaceUuid}/${parent}`)
+    fetch(`http://localhost:3000/api/spaceItem/${params.spaceUuid}/${parent}`)
       .then(e => e.json())
-      .then(e => setRows(e));    
+      .then(e => setRows(e));
   }, [params]);
 
   return (
     <>
-      <BasicBreadcrumbs spaceUuid={params.spaceUuid} folderNames={params.folderNames}></BasicBreadcrumbs>
+      <div style={{ float: 'left' }}>
+        <BasicBreadcrumbs spaceUuid={params.spaceUuid} folderNames={params.folderNames}></BasicBreadcrumbs>
+      </div>
       <CreateFolderDialog params={params}></CreateFolderDialog>
       <UploadFileDialog params={params}></UploadFileDialog>
 
-      <Box sx={{ height: 400, width: '100%' }}>
+      <Box sx={{ width: '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}

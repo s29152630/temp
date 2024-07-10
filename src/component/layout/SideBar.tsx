@@ -18,10 +18,16 @@ export default function SideBar() {
         "href": "/",
     }, {
         "id": 2,
+        "name": "Space Item",
+        "href": "/spaceItem",
+    },
+    {
+        "id": 3,
         "name": "Space",
         "href": "/space",
-    }, {
-        "id": 3,
+    },
+    {
+        "id": 4,
         "name": "Help",
         "href": "/help",
     }];
