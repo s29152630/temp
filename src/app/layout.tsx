@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { Toolbar } from "@mui/material";
 import SideBar from "@/component/layout/SideBar";
 import TopBar from "@/component/layout/TopBar";
+import AuthProvider from "@/component/provider/authProvider";
 
 
 export const metadata: Metadata = {
@@ -18,14 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        <Box sx={{ display: 'flex' }}>
-          <TopBar></TopBar>
-          <SideBar></SideBar>
-          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-            <Toolbar />
-            {children}
+        <AuthProvider>
+          <Box sx={{ display: 'flex' }}>
+            <TopBar></TopBar>
+            <SideBar></SideBar>
+            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+              <Toolbar />
+              {children}
+            </Box>
           </Box>
-        </Box>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -3,6 +3,7 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import LogInOut from './LogInOut';
 
 export default function TopBar() {
 
@@ -13,6 +14,7 @@ export default function TopBar() {
                     <Typography variant="h6" noWrap component="div">
                         FU MEOW
                     </Typography>
+                    <LogInOut></LogInOut>
                 </Toolbar>
             </AppBar>
         </>
