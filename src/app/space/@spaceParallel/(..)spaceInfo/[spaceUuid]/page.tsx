@@ -34,7 +34,6 @@ export default function SpaceInfoModal({ params }: { params: { spaceUuid: string
 
     return (
         <div>
-            <Button onClick={handleOpen}>Open modal</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
