@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 export { default } from "next-auth/middleware"
 
-export const config = { matcher: ["/spaceItem/:path"] }
+export const config = { matcher: ["/spaceItemF/:path"] }
 
 // export function middleware(request: NextRequest) {
 //     if (request.nextUrl.pathname.startsWith('/space')) {
